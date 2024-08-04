@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border text-lg;
+}
+/* Custom scrollbar styles */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.btn-primary {
+  @apply text-white bg-primary-900 cursor-pointer hover:bg-primary-500 transition-all rounded;
+}
+.btn-secondary {
+  @apply text-white bg-[#424242] cursor-pointer hover:bg-[#4f4f4f] transition-all rounded;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+span,
+div,
+svg {
+  @apply text-white;
+}
+
+svg {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+* {
+  /* color: white; */
+  user-select: none;
+  outline: none;
+  border: none;
+}
+
+li {
+  @apply list-none;
+}
+svg {
+  @apply flex items-center justify-center;
+}
+
+body {
+  @apply bg-black;
+}
+body {
+  background: theme("backgroundColor.black");
+}
+
+.modal-overlay {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+/* Custom ScrollBar */
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: white;
+}
+
+#reels-container {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+#single-reel {
+  scroll-snap-align: start;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+}
+
+.dark-loading-skeleton {
+  background-color: #333;
+}
+.react-loading-skeleton {
+  background-color: #444;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  aspect-ratio: 1;
+  display: grid;
+  border-radius: 50%;
+  background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.5) 30%,
+        #ffffff00 0 70%,
+        rgb(255, 255, 255) 0
+      )
+      50%/8% 100%,
+    linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.25) 30%,
+        #ffffff00 0 70%,
+        rgba(255, 255, 255, 0.75) 0
+      )
+      50%/100% 8%;
+  background-repeat: no-repeat;
+  animation: l23 1s infinite steps(12);
+}
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.915;
+  transform: rotate(30deg);
+}
+.loader::after {
+  opacity: 0.83;
+  transform: rotate(60deg);
+}
+@keyframes l23 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+/* src/MasonryGrid.css */
+.my-masonry-grid {
+  display: flex;
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 10px;
+  background-clip: padding-box;
+}
+
+.masonry-item {
+  margin-bottom: 10px;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
