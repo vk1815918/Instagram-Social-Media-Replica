@@ -5,6 +5,7 @@ import { useLazyGetNotificationsQuery } from "./api/services/notificationService
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 import useAuth from "./hooks/use-auth.jsx";
 
 // Modals
