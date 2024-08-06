@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect } from "react";
 import Routes from "./routes/routes";
 import { useLazyFetchCurrentProfileQuery } from "./api/services/profileServices.js";
 import { useLazyGetNotificationsQuery } from "./api/services/notificationService";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import useAuth from "./hooks/use-auth.jsx";
@@ -19,6 +19,7 @@ import FollowerModal from "./components/common/modals/follower/follower-modal";
 import FollowingModal from "./components/common/modals/following/following-modal";
 
 const App = () => {
+  const navigate = useNavigate();
   const [_, setSearchParams] = useSearchParams();
   const [fetchCurentProfile] = useLazyFetchCurrentProfileQuery();
   const [getAllNotifications] = useLazyGetNotificationsQuery({
@@ -31,8 +32,10 @@ const App = () => {
   useLayoutEffect(() => {
     if (isLoggedIn) {
       fetchCurentProfile();
+      getAllNotifications();
       return;
     }
+    navigate("/login");
   }, [token]);
 
   useEffect(() => {
@@ -45,7 +48,6 @@ const App = () => {
     });
 
     // get all notifciations
-    getAllNotifications();
   }, []);
 
   return (
