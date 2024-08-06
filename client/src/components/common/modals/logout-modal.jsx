@@ -27,8 +27,8 @@ const LogoutModal = () => {
 
   return (
     <Modal
-      overlayClassName="modal-overlay bg-black/40 flex items-center justify-center max-sm:items-end"
-      className="modal w-full sm:w-[350px] sm:h-fit bg-[#3c3c3c] rounded-t-md sm:rounded-md"
+      overlayClassName="modal-overlay bg-black/40 flex items-center justify-center itemd-center"
+      className="modal w-[60%] sm:w-[350px] sm:h-fit bg-[#3c3c3c] rounded-md"
       isOpen={isOpen}
       onRequestClose={closeModal}
     >
