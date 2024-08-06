@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-const StorieAvatar = ({ src, withRing = true }) => {
+const StorieAvatar = ({ src, withRing = true, className }) => {
   return (
     <div
       className={twMerge(
@@ -9,7 +9,11 @@ const StorieAvatar = ({ src, withRing = true }) => {
         }`
       )}
     >
-      <div className="size-[100%] aspect-square rounded-full border-[black] border-4 scale-95 overflow-hidden">
+      <div
+        className={twMerge(
+          `w-[100px] aspect-square rounded-full border-[black] border-4 overflow-hidden ${className}`
+        )}
+      >
         <img src={src} className="size-[100%] object-cover" />
       </div>
     </div>

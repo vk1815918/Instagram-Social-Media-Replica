@@ -5,7 +5,7 @@ import { useLazyGetNotificationsQuery } from "./api/services/notificationService
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 import useAuth from "./hooks/use-auth.jsx";
 
 // Modals
@@ -21,7 +21,7 @@ import FollowingModal from "./components/common/modals/following/following-modal
 
 const App = () => {
   const navigate = useNavigate();
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [fetchCurentProfile] = useLazyFetchCurrentProfileQuery();
   const [getAllNotifications] = useLazyGetNotificationsQuery({
     pollingInterval: 60000,
@@ -36,31 +36,36 @@ const App = () => {
       getAllNotifications();
       return;
     }
-    navigate("/login");
   }, [token]);
 
   useEffect(() => {
     // remove the id of post or some single post params if they are available
-    setSearchParams((prev) => {
-      prev.delete("commentIdToReply");
-      prev.delete("commentUserToReply");
-      prev.delete("p");
-      return prev;
-    });
+    const commentIdToReply = searchParams.get("commentIdToReply") || null;
+    const commentUserToReply = searchParams.get("commentUserToReply") || null;
 
-    // get all notifciations
+    if (commentIdToReply) {
+      setSearchParams((prev) => {
+        prev.has("commentIdToReply") && prev.delete("commentIdToReply");
+        return prev;
+      });
+    } else if (commentUserToReply) {
+      setSearchParams((prev) => {
+        prev.has("commentUserToReply") && prev.delete("commentUserToReply");
+        return prev;
+      });
+    }
   }, []);
 
   return (
     <>
       <Routes />
+      <AllModalsWwrapper />
       <ToastContainer
         style={{ color: "black" }}
         className="text-black"
         toastClassName="text-black"
         position="bottom-right"
       />
-      <AllModalsWwrapper />
     </>
   );
 };

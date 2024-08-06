@@ -12,6 +12,7 @@ import { showModal } from "../../store/slices/modalSlice";
 import useAuth from "@/hooks/use-auth";
 import SkeletonLoader from "../ui/skeleton";
 import { TbSquareRoundedPlus } from "react-icons/tb";
+import instagramLogo from "@/assets/logo/i-logo-2.jpg";
 
 const Sidebar = () => {
   const { isLoading, user } = useAuth();
@@ -32,7 +33,7 @@ const Sidebar = () => {
             <Link to={"/"} className="px-2">
               <div className="text-[30px] ">
                 <img
-                  src="/assets/i-logo-2.jpg"
+                  src={instagramLogo}
                   className="max-lg:hidden max-w-[115px]"
                 />
               </div>

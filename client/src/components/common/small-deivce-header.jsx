@@ -3,6 +3,8 @@ import { BiSearch } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import instagramLogo from "@/assets/logo/i-logo-2.jpg";
+
 const SmallDeviceHeader = () => {
   const unread = useSelector((state) => state.notification.unread);
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const SmallDeviceHeader = () => {
         <div>
           <Link to={"/"}>
             <img
-              src="/assets/i-logo-2.jpg"
+              src={instagramLogo}
               className="max-w-[120px] cursor-pointer"
               alt=""
             />

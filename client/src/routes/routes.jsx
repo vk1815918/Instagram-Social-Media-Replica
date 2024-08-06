@@ -1,26 +1,27 @@
 import { lazy } from "react";
 // Importing Hooks👇🏼
-import { useRoutes, Navigate } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 // Importing Layouts👇🏼
-import MainLayout from "../layouts/main-layout";
-import ReelsLayout from "../layouts/reels-layout.jsx";
+const MainLayout = lazy(() => import("../layouts/main-layout"));
+const ReelsLayout = lazy(() => import("../layouts/reels-layout"));
+
 // Importing pages using lazy render 👇🏼
-const HomePage = lazy(() => import("../pages/Home/home-page.jsx"));
-const LoginPage = lazy(() => import("../pages/login/login-page.jsx"));
-const SignupPage = lazy(() => import("../pages/signup/signup-page.jsx"));
-const ProfilePage = lazy(() => import("../pages/profile/profile-page.jsx"));
-const ReelsPage = lazy(() => import("../pages/reels/reels-page.jsx"));
-const ExplorePage = lazy(() => import("../pages/explore/explore-page.jsx"));
+const HomePage = lazy(() => import("../pages/Home/home-page"));
+const LoginPage = lazy(() => import("../pages/login/login-page"));
+const SignupPage = lazy(() => import("../pages/signup/signup-page"));
+const ProfilePage = lazy(() => import("../pages/profile/profile-page"));
+const ReelsPage = lazy(() => import("../pages/reels/reels-page"));
+const ExplorePage = lazy(() => import("../pages/explore/explore-page"));
 const StoriesPage = lazy(() => import("@/pages/stories/stories-page"));
 const NotFoundPage = lazy(() => import("@/pages/not-found-page"));
 const SinglePostPage = lazy(() =>
   import("@/pages/single-post/single-post-page")
 );
 const EditAccountPage = lazy(() =>
-  import("../pages/editAccount/edit-account-page.jsx")
+  import("../pages/editAccount/edit-account-page")
 );
 const NotificationsPage = lazy(() =>
-  import("../pages/notifications/notifications-page.jsx")
+  import("../pages/notifications/notifications-page")
 );
 // UseAuth
 import useAuth from "@/hooks/use-auth";
@@ -31,52 +32,53 @@ const Routes = () => {
 
   return useRoutes([
     {
-      element: isLoggedIn ? <MainLayout /> : <Navigate to="/login" />,
+      element: isLoggedIn ? <MainLayout /> : <Navigate to={"/login"} />,
+      path: '/',
       children: [
         {
-          element: isLoggedIn ? <HomePage /> : <Navigate to="/login" />,
-          path: "/",
+          index: true,
+          element: isLoggedIn ? <HomePage /> : <Navigate to={"/login"} />,
         },
         {
-          element: isLoggedIn ? <NotFoundPage /> : <Navigate to="/login" />,
           path: "*",
+          element: isLoggedIn ? <NotFoundPage /> : <Navigate to={"/login"} />,
         },
         {
-          element: isLoggedIn ? <StoriesPage /> : <Navigate to="/login" />,
-          path: "/stories",
+          path: "stories",
+          element: isLoggedIn ? <StoriesPage /> : <Navigate to={"/login"} />,
         },
         {
-          element: isLoggedIn ? <ProfilePage /> : <Navigate to="/login" />,
-          path: "/:username",
+          path: ":username",
+          element: isLoggedIn ? <ProfilePage /> : <Navigate to={"/login"} />,
         },
         {
-          element: isLoggedIn ? <SinglePostPage /> : <Navigate to="/login" />,
-          path: "/p/:postId",
+          path: "p/:postId",
+          element: isLoggedIn ? <SinglePostPage /> : <Navigate to={"/login"} />,
         },
         {
-          path: "/accounts",
+          path: "accounts",
           children: [
             {
+              path: "edit",
               element: isLoggedIn ? (
                 <EditAccountPage />
               ) : (
                 <Navigate to="/login" />
               ),
-              path: "edit",
             },
           ],
         },
         {
-          element: isLoggedIn ? <ExplorePage /> : <Navigate to="/login" />,
           path: "/explore/",
+          element: isLoggedIn ? <ExplorePage /> : <Navigate to={"/login"} />,
         },
         {
+          path: "/notifications/",
           element: isLoggedIn ? (
             <NotificationsPage />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to={"/login"} />
           ),
-          path: "/notifications/",
         },
       ],
     },
@@ -88,15 +90,15 @@ const Routes = () => {
           <ReelsPage />
         </ReelsLayout>
       ) : (
-        <Navigate to="/login" />
+        <Navigate to={"/login"} />
       ),
     },
     {
-      element: isLoggedIn ? <Navigate to="/" /> : <LoginPage />,
+      element: isLoggedIn ? <Navigate to={"/"} /> : <LoginPage />,
       path: "/login",
     },
     {
-      element: isLoggedIn ? <Navigate to="/" /> : <SignupPage />,
+      element: isLoggedIn ? <Navigate to={"/"} /> : <SignupPage />,
       path: "/signup",
     },
   ]);

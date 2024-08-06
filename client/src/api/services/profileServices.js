@@ -12,7 +12,6 @@ const profileServices = api.injectEndpoints({
         dispatch(setUser({ status: "loading", data: null }));
         queryFulfilled
           .then((res) => {
-            console.log("auth profile response", res);
             dispatch(setUser({ status: "succeeded", data: res.data }));
           })
           .catch(() => {

@@ -1,8 +1,51 @@
 import StorieAvatar from "@/components/common/storie-avatar";
 import SkeletonLoader from "@/components/ui/skeleton";
 import useAuth from "@/hooks/use-auth";
-import { textSlicer } from "@/utils/text";
 import { BiPlus } from "react-icons/bi";
+import storieOneImg from "@/assets/images/acc-1.jpg";
+import storieTwoImg from "@/assets/images/acc-9.jpg";
+import storieThreeImg from "@/assets/images/acc-3.jpg";
+import storieFourImg from "@/assets/images/acc-12.jpg";
+import storieFiveImg from "@/assets/images/acc-11.jpg";
+import storieSixImg from "@/assets/images/acc-6.jpg";
+import storieSevenImg from "@/assets/images/acc-7.jpg";
+import storieEightImg from "@/assets/images/acc-8.jpg";
+
+const stories = [
+  {
+    profilePicture: storieOneImg,
+    username: "bertemios",
+  },
+  {
+    profilePicture: storieTwoImg,
+    username: "nebilnur",
+  },
+  {
+    profilePicture: storieThreeImg,
+    username: "adiss_12",
+  },
+  {
+    profilePicture: storieFourImg,
+    username: "virgilvandijk",
+  },
+  {
+    profilePicture: storieFiveImg,
+    username: "_paris.boy",
+  },
+  {
+    profilePicture: storieSixImg,
+    username: "ezedin.kamil",
+  },
+  {
+    profilePicture: storieSevenImg,
+    username: "eden_55",
+  },
+  {
+    profilePicture: storieEightImg,
+    username: "amanuel_304",
+  },
+];
+
 const Stories = () => {
   const { user, isLoading } = useAuth();
   return isLoading ? (
@@ -20,74 +63,18 @@ const Stories = () => {
         <div className="max-w-[100%] text-xs overflow-hidden">Your story</div>
       </div>
 
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-1.jpg" />
+      {stories.map((story, idx) => (
+        <div className="text-center cursor-pointer">
+          <StorieAvatar
+            className={"w-[60px] sm:w-[70px]"}
+            src={story.profilePicture}
+            withRing
+          />
+          <div className="max-w-[100%] text-xs overflow-hidden">
+            {story.username}
+          </div>
         </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">Visca.barca</div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-2.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">Szobozlai</div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-3.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden ">
-          This.anfield
-        </div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-4.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">Animation</div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-5.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">Alison1</div>
-      </div>
-      <div className="text-center cursor-pointe">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-6.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden ">SolaYnwa</div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:size-[70px]">
-          <StorieAvatar src="/assets/images/acc-7.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">L.legends</div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-8.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">
-          {textSlicer("Solomongetent", 10)}
-        </div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-1.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">
-          {textSlicer("Solomongetent", 10)}
-        </div>
-      </div>
-      <div className="text-center cursor-pointer">
-        <div className="w-[60px] sm:w-[70px]">
-          <StorieAvatar src="/assets/images/acc-2.jpg" />
-        </div>
-        <div className="max-w-[100%] text-xs overflow-hidden">
-          {textSlicer("Solomongetent", 10)}
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

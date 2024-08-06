@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ErrorMessage from "@/components/common/error-message";
 import { CustomNavigator } from "@/handler/navigator";
+import instagramLogo from "@/assets/logo/i-logo-2.jpg";
+import posterImage from "@/assets/images/login-img-1.png";
 
 export const LoginValidationSchema = yup.object({
   username: yup.string().required("Username is required"),
@@ -49,15 +51,11 @@ const LoginView = () => {
         <div className="h-[600px] max-md:hidden">
           <div className="flex w-full relative">
             <img
-              src="/assets/images/login-img-1.png"
+              src={posterImage}
               className="h-full absolute right-20 bottom-3"
               alt=""
             />
-            <img
-              src="/assets/images/login-img-1.png"
-              className="h-full"
-              alt=""
-            />
+            <img src={posterImage} className="h-full" alt="" />
           </div>
         </div>
 
@@ -68,11 +66,7 @@ const LoginView = () => {
               <div className="w-full h-fit border border-[#c7c7c7]  border-opacity-60">
                 <div className="w-full flex flex-col pt-10 px-5">
                   <header className="w-full flex justify-center">
-                    <img
-                      src="/assets/i-logo-2.jpg"
-                      alt=""
-                      className="w-[180px]"
-                    />
+                    <img src={instagramLogo} alt="" className="w-[180px]" />
                   </header>
 
                   {/* --------Form----------- */}
