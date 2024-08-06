@@ -38,7 +38,7 @@ const LoginView = () => {
       });
       navigate("/");
     } catch (error) {
-      toast.dark("Please try agian", {
+      toast.dark(error.data.message, {
         className: "dark:bg-black dark:text-white",
       });
     }
