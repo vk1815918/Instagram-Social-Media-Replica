@@ -4,6 +4,7 @@ import { useGetAllPostsQuery } from "@/api/services/postServices.js";
 import { SpinnerLoader } from "@/components/common/loader";
 import { useSearchParams } from "react-router-dom";
 import Suggestion from "./suggestion";
+import SkeletonLoader from "@/components/ui/skeleton";
 
 const PostListContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,11 +30,7 @@ const PostListContainer = () => {
 
   //   Rendering View Using Conditional👇🏼
   if (isLoading) {
-    return (
-      <div className="mt-10 w-full flex justify-center">
-        <SpinnerLoader />
-      </div>
-    );
+    return <PostLoader />;
   }
 
   if (isError) {
@@ -69,7 +66,7 @@ const PostListContainer = () => {
           return <PostCard key={post._id + idx} data={post} />;
         })}
       </div>
-      
+
       {data.posts && isFetching && (
         <div className="w-full flex justify-center">
           <SpinnerLoader />
@@ -80,3 +77,42 @@ const PostListContainer = () => {
 };
 
 export default PostListContainer;
+
+const PostLoader = () => (
+  <div className="px-2 w-full flex flex-col gap-10 sm:gap-20 items-center">
+    {/* Single Card Loader */}
+    {[
+      [...Array(3)].map(() => (
+        <div className="max-sm:w-full sm:w-[65%] min-h-fit justify-center">
+          <div className="w-full flex flex-col items-center gap-4">
+            {/* Header */}
+            <div className="w-full flex gap-2">
+              <SkeletonLoader width={"35px"} variant="circle" />
+              <div className="w-full flex flex-col  gap-1">
+                <SkeletonLoader
+                  width={"70%"}
+                  height={"13px"}
+                  borderRadius={"50px"}
+                  speed="2s"
+                />
+                <SkeletonLoader
+                  width={"50%"}
+                  height={"13px"}
+                  borderRadius={"50px"}
+                  speed="3s"
+                />
+              </div>
+            </div>
+
+            {/* Post Section */}
+            <SkeletonLoader
+              width={"100%"}
+              height={"55vh"}
+              borderRadius={"6px"}
+            />
+          </div>
+        </div>
+      )),
+    ]}
+  </div>
+);

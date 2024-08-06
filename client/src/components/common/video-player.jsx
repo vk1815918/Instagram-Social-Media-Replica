@@ -1,4 +1,3 @@
-// src/VideoPlayer.js
 import React, { useRef, useState, useEffect } from "react";
 import { FaPlay, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";

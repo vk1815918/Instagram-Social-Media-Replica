@@ -22,7 +22,6 @@ const CommentForm = ({ postId }) => {
     setText(e.target.value);
   };
 
-  // Focus input when user select reply comment
   useEffect(() => {
     if (commentIdToReply) {
       inputRef.current.focus();
@@ -32,7 +31,6 @@ const CommentForm = ({ postId }) => {
   const handleRemoveSelectedReply = () => {
     setSearchParams((prev) => {
       prev.delete("commentIdToReply");
-      prev.delete("commentUserToReply");
       return prev;
     });
   };
@@ -41,14 +39,13 @@ const CommentForm = ({ postId }) => {
     await addComment({ postId, text, parentComment: commentIdToReply });
     setSearchParams((prev) => {
       prev.delete("commentIdToReply");
-      prev.delete("commentUserToReply");
       return prev;
     });
     setText("");
   };
 
   return (
-    <div className="max-md:hidden flex flex-col w-full">
+    <div className="flex flex-col w-full">
       {commentIdToReply && (
         <div className="w-full flex justify-between items-center my-2 px-2 py-2 bg-[gray]/40">
           <p className="text-xs opacity-80">Replying to {commentUserToReply}</p>

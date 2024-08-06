@@ -1,16 +1,16 @@
 import { MdOutlineExplore, MdSlowMotionVideo } from "react-icons/md";
-import { CiSquarePlus } from "react-icons/ci";
 import { GoHomeFill } from "react-icons/go";
-import { BiMessageSquareAdd } from "react-icons/bi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Avatar from "./avatar";
 import { useDispatch } from "react-redux";
 import { showModal } from "../../store/slices/modalSlice";
-import { SpinnerLoader } from "./loader";
 import useAuth from "@/hooks/use-auth";
+import { TbSquareRoundedPlus } from "react-icons/tb";
+import SkeletonLoader from "../ui/skeleton";
 
 const SmallDeviceMenu = () => {
   const { isLoading, user } = useAuth();
+  const { pathname } = useLocation();
 
   const dispatch = useDispatch();
 
@@ -20,72 +20,53 @@ const SmallDeviceMenu = () => {
 
   return (
     <>
-      <div className="sm:hidden z-[100] py-2 px-6 w-full fixed bottom-0 left-0 right-0 bg-black">
-        <div className="flex justify-center w-full">
+      <div className="sm:hidden z-[100] py-2 px-4 w-full fixed bottom-0 left-0 right-0 bg-black">
+        <div className="w-full flex items-center">
           {/* Nav links */}
-          <ul className="max-sm:flex-row flex flex-col gap-6 max-sm:justify-between max-sm:w-full">
+          <ul className="w-full flex flex-row items-center gap-6 justify-between  ">
             {/* <NavLinks /> */}
-            <NavLink to="/">
-              <li className="cursor-pointer">
-                <ul
-                  className={` gap-2 items-center hover:font-bold flex transition-all`}
-                >
-                  <li>
-                    <GoHomeFill className="text-[26px]" />
-                  </li>
-                </ul>
-              </li>
+            <NavLink
+              to="/"
+              className="sidebar-link cursor-pointer transition hover:bg-[#8080804d] rounded-md p-1.5"
+            >
+              <GoHomeFill className="text-[26px]" />
             </NavLink>
 
-            <NavLink to="/explore/">
-              <li className="cursor-pointer">
-                <ul
-                  className={` gap-2 items-center hover:font-bold flex transition-all `}
-                >
-                  <li>
-                    <MdOutlineExplore className="text-[26px]" />
-                  </li>
-                </ul>
-              </li>
+            <NavLink
+              to="/explore/"
+              className="sidebar-link cursor-pointer transition hover:bg-[#8080804d] rounded-md p-1.5"
+            >
+              <MdOutlineExplore className="text-[26px]" />
             </NavLink>
 
-            <NavLink to="/reels/">
-              <li className="cursor-pointer">
-                <ul
-                  className={` gap-2 items-center hover:font-bold flex transition-a[28px]`}
-                >
-                  <li>
-                    <MdSlowMotionVideo className="text-[26px]" />
-                  </li>
-                </ul>
-              </li>
+            <NavLink
+              to="/reels/"
+              className="sidebar-link cursor-pointer transition hover:bg-[#8080804d] rounded-md p-1.5"
+              state={{ prevPagePath: pathname }}
+            >
+              <MdSlowMotionVideo className="text-[26px]" />
             </NavLink>
 
-            <li className="cursor-pointer">
-              <ul
+            <li className="sidebar-link cursor-pointer transition hover:bg-[#8080804d] rounded-md p-1.5">
+              <div
                 className={` gap-2 items-center hover:font-bold flex transition-all`}
                 onClick={() => handleShowModal("createPost")}
               >
-                <li>
-                  <CiSquarePlus className="text-[26px]" />
-                </li>
-              </ul>
+                <TbSquareRoundedPlus className="text-[26px]" />
+              </div>
             </li>
 
             {/* Profile Navigator 👇🏼 */}
             {isLoading ? (
-              <div className="size-[23px] bg-[gray] rounded-full"></div>
+              <SkeletonLoader width={"25px"} height={"25px"} variant="circle" />
             ) : (
               user && (
-                <NavLink to={`/${user?.username}/`} onContextMenu={() => handleShowModal('logout')}>
-                  <li className="cursor-pointer ">
-                    <ul className="flex items-center gap-2">
-                      <li className="w-[23px]">
-                        <Avatar src={user?.profilePicture} />
-                      </li>
-                      <li className="max-lg:hidden">Profile</li>
-                    </ul>
-                  </li>
+                <NavLink
+                  className="auth-profile-navigtor cursor-pointer transition hover:bg-[#8080804d] rounded-md h-fit"
+                  to={`/${user?.username}/`}
+                  onContextMenu={() => handleShowModal("logout")}
+                >
+                  <Avatar src={user?.profilePicture} className={"w-[23px]"} />
                 </NavLink>
               )
             )}

@@ -6,12 +6,14 @@ import UserPostsContainer from "../_components/user/posts-container.jsx";
 import FirstCol from "../_components/user/first-col.jsx";
 import { useSearchParams } from "react-router-dom";
 import { handleShowModal } from "@/handler/modal-handlers.js";
+import NotFoundPage from "@/pages/not-found-page.jsx";
 
 const ProfileUserview = ({ username: reqUsername }) => {
   const {
     data: userData,
     isLoading,
     isError,
+    error,
   } = useGetAccountProfileQuery(reqUsername);
   const [_, setSearchParams] = useSearchParams();
 
@@ -31,6 +33,10 @@ const ProfileUserview = ({ username: reqUsername }) => {
         <SpinnerLoader className={"w-[30px]"} />
       </div>
     );
+  }
+
+  if (error && error?.status === 404) {
+    return <NotFoundPage />;
   }
 
   if (isError) {

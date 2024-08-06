@@ -1,4 +1,4 @@
-import { clearToken } from "@/store/slices/authSlice.js";
+import { clearToken, setToken } from "@/store/slices/authSlice.js";
 import api from "../index.js";
 
 const authServices = api.injectEndpoints({
@@ -16,6 +16,14 @@ const authServices = api.injectEndpoints({
         method: "POST",
         body: userData,
       }),
+      onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+        try {
+          const response = (await queryFulfilled).data;
+          dispatch(setToken(response.accessToken));
+        } catch (error) {
+          console.log("Login error", error);
+        }
+      },
       invalidatesTags: ["current_profile", "notifications"],
     }),
     logout: builder.mutation({

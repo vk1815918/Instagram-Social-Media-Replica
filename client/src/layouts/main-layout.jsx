@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import SideBar from "@/components/common/siderbar";
+import SideBar from "@/components/common/sidebar";
 import SmallDeviceHeader from "@/components/common/small-deivce-header";
 import { SpinnerLoader } from "@/components/common/loader";
 import { ErrorBoundary } from "react-error-boundary";

@@ -8,11 +8,11 @@ const HomeView = () => {
     <>
       <main className="grid grid-cols-[65%,35%] gap-10 w-[100%] max-lg:grid-cols-[100%]">
         <div className="min-h-screen">
-          <div className=" gap-[10px] flex flex-col">
+          <div className=" gap-[30px] flex flex-col">
             {/* ------- Stoire Container -------- */}
             <Stories />
 
-            <section>
+            <section className="">
               {/* ------ Post Container ------- */}
               <PostListContainer />
 

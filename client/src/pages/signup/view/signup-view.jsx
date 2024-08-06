@@ -1,80 +1,66 @@
-import React, { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
-import { InputPrimary } from "../../../components/common/input";
-import { useSignupMutation } from "../../../api/services/authServices.js";
+import { useSignupMutation } from "@/api/services/authServices.js";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import ErrorMessage from "@/components/common/error-message";
+import { CustomNavigator } from "@/handler/navigator";
+import { toast } from "react-toastify";
+const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[a-zA-Z0-9._]{1,30}$/;
+
+export const SignupValidationSchema = yup.object({
+  username: yup
+    .string()
+    .matches(usernameRegex, `Invalid username please enter valid username `)
+    .required("Username is required")
+    .min(3, "length  must be 3 characters or more"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Please write valid email"),
+  fullName: yup
+    .string()
+    .required("Fullname is required")
+    .min(3, "length must be at least 3 characters long"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "length must be 6 characters or more"),
+});
 
 const SignupView = () => {
-  const [usernameLabel, setUsernameLabel] = useState(false);
-  const [passwordLabel, setPasswordLabel] = useState(false);
-  const [fullnameLabel, setFullnameLabel] = useState(false);
-  const [emailLabel, setEmailLabel] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [postSignup, { data, isLoading }] = useSignupMutation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      fullName: "",
+      password: "",
+    },
+    resolver: yupResolver(SignupValidationSchema),
+  });
+  const [requestSignup, { isLoading }] = useSignupMutation();
 
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value.trim());
-    if (e.target.value.length >= 1) {
-      setUsernameLabel(true);
-    } else {
-      setUsernameLabel(false);
-    }
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value.trim());
-    if (e.target.value.length >= 1) {
-      setEmailLabel(true);
-    } else {
-      setEmailLabel(false);
-    }
-  };
-  const handleFullnameChange = (e) => {
-    setFullName(e.target.value.trim());
-    if (e.target.value.length >= 1) {
-      setFullnameLabel(true);
-    } else {
-      setFullnameLabel(false);
-    }
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value.trim());
-    if (e.target.value.length >= 1) {
-      setPasswordLabel(true);
-    } else {
-      setPasswordLabel(false);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
-    if (!username || !password || !email || !fullName) {
-      return alert("All field are mandatoty");
-    }
-    const userData = { username, password, email, fullName };
-
+  const onSubmit = async (data) => {
     try {
-      const res = await postSignup(userData).unwrap();
-      if (res.status === "success") {
-        alert(res.message);
-        navigate("/login");
-        return;
-      }
+      const res = await requestSignup(data).unwrap();
+      navigate("/login");
+      toast(res.message || "Something went wrong please try again later", {
+        className: "dark:bg-black dark:text-white",
+      });
     } catch (error) {
-      console.log("error", error);
-      if (error.data.type === "ValidationError") {
-        alert("Validation Error");
-        return;
-      }
-      alert(error.data.message);
+      toast(error.message || "Something went wrong please try again later", {
+        className: "dark:bg-black dark:text-white",
+      });
     }
   };
+
   return (
     <div className="py-2 w-full min-h-screen flex gap-4 items-center justify-center text-white">
       <div className="min-h-full max-sm:mx-auto max-sm:w-[90%] w-[340px]">
@@ -118,47 +104,70 @@ const SignupView = () => {
                 {/* --------Form----------- */}
                 <form
                   className="flex flex-col gap-3"
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={handleSubmit(onSubmit)}
                 >
-                  <InputPrimary
-                    label="Username"
-                    labelType={usernameLabel}
-                    onChange={handleUsernameChange}
-                    type="text"
-                  />
-                  <InputPrimary
-                    label={"Full Name"}
-                    labelType={fullnameLabel}
-                    onChange={handleFullnameChange}
-                    type="text"
-                  />
-                  <InputPrimary
-                    label={"Email"}
-                    labelType={emailLabel}
-                    onChange={handleEmailChange}
-                    type="email"
-                  />
-                  <InputPrimary
-                    label={"Password"}
-                    labelType={passwordLabel}
-                    onChange={handlePasswordChange}
-                    type="password"
-                  />
-                  <div className="w-full mt-1">
-                    <button
-                      className="btn-primary w-full text-sm"
-                      onClick={handleSubmit}
-                      disabled={isLoading}
-                    >
-                      Sign up
-                    </button>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
+                      <input
+                        className="px-2 py-1 bg-[gray]/50 text-sm"
+                        placeholder="Username"
+                        type="text"
+                        {...register("username")}
+                      />
+                      <ErrorMessage error={errors?.username?.message} />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <input
+                        className="px-2 py-1 bg-[gray]/50 text-sm"
+                        placeholder="Fullname"
+                        type="text"
+                        {...register("fullName")}
+                      />
+                      <ErrorMessage error={errors?.fullName?.message} />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <input
+                        className="px-2 py-1 bg-[gray]/50 text-sm"
+                        placeholder="Email"
+                        type="text"
+                        {...register("email")}
+                      />
+                      <ErrorMessage error={errors?.email?.message} />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <input
+                        className="px-2 py-1 bg-[gray]/50 text-sm"
+                        placeholder="Password"
+                        type="password"
+                        {...register("password")}
+                      />
+                      <ErrorMessage error={errors?.password?.message} />
+                    </div>
                   </div>
+
+                  <button
+                    className="btn-primary mt-2 w-full text-sm"
+                    disabled={isLoading}
+                  >
+                    Sign up
+                  </button>
                 </form>
               </div>
+              {/* -------Second Container-------- */}
+              <div className="mt-4 w-full border border-[#c7c7c7]  border-opacity-60 grid place-items-center">
+                <div className="">
+                  <div className="text-sm text-white space-x-2 flex">
+                    <h3>I have an account</h3>
+                    <CustomNavigator
+                      to={"/login"}
+                      className="cursor-pointer text-primary-500 font-bold "
+                    >
+                      Login
+                    </CustomNavigator>
+                  </div>
+                </div>
+              </div>{" "}
             </div>
-
-            {/* -------Second Container-------- */}
-            <div></div>
             {/* -------Third Container-------- */}
             <div></div>
           </div>

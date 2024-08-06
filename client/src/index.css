@@ -14,12 +14,14 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 .btn-primary {
   @apply text-white bg-primary-900 cursor-pointer hover:bg-primary-500 transition-all rounded;
 }
 .btn-secondary {
   @apply text-white bg-[#424242] cursor-pointer hover:bg-[#4f4f4f] transition-all rounded;
 }
+
 h1,
 h2,
 h3,
@@ -32,12 +34,6 @@ span,
 div,
 svg {
   @apply text-white;
-}
-
-svg {
-  display: flex;
-  justify-items: center;
-  align-items: center;
 }
 * {
   /* color: white; */
@@ -52,32 +48,40 @@ li {
 svg {
   @apply flex items-center justify-center;
 }
-
 body {
   @apply bg-black;
 }
-body {
-  background: theme("backgroundColor.black");
-}
-
-.modal-overlay {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-}
 
 /* Custom ScrollBar */
-
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
   background: #000;
 }
 ::-webkit-scrollbar-thumb {
   background: white;
+  border-radius: 20px;
+}
+
+/*  */
+.sidebar {
+  border-right: 1px rgba(255, 255, 255, 0.196) solid;
+}
+.sidebar-link.active {
+  background: #8080804d;
+}
+.auth-profile-navigtor.active {
+  outline: rgb(205, 205, 205) solid 2px;
+  offset: 10px;
+  border-radius: 50%;
+}
+.modal-overlay {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
 }
 
 #reels-container {
@@ -94,12 +98,6 @@ body {
   width: 0px;
 }
 
-.dark-loading-skeleton {
-  background-color: #333;
-}
-.react-loading-skeleton {
-  background-color: #444;
-}
 
 /* HTML: <div class="loader"></div> */
 .loader {
@@ -142,7 +140,7 @@ body {
   }
 }
 
-/* src/MasonryGrid.css */
+/* MasonryGrid */
 .my-masonry-grid {
   display: flex;
   width: auto;
@@ -160,4 +158,68 @@ body {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Skeleton loader */
+:root {
+  --skeleton-light-bg: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  --skeleton-dark-bg: linear-gradient(
+    90deg,
+    #3a3a3a 25%,
+    #2a2a2a 50%,
+    #3a3a3a 75%
+  );
+}
+
+.color-scheme-light {
+  background: var(--skeleton-light-bg);
+}
+
+.color-scheme-dark {
+  background: var(--skeleton-dark-bg);
+}
+
+.skeleton-loader {
+  background-size: 200% 100%;
+  animation-iteration-count: infinite;
+}
+
+@keyframes loading-left-right {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes loading-top-bottom {
+  0% {
+    background-position: 0 -200%;
+  }
+  100% {
+    background-position: 0 200%;
+  }
+}
+
+.animation-left-right {
+  animation-name: loading-left-right;
+}
+
+.animation-top-bottom {
+  animation-name: loading-top-bottom;
+}
+
+.variant-rectangle {
+  border-radius: 4px;
+}
+
+.variant-circle {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
 }

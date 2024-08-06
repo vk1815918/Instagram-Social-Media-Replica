@@ -21,6 +21,12 @@ export const pushNewNotification = async (
     case "comment_mention":
       message = "You were mentioned in a comment";
       break;
+    case "comment_like":
+      message = "was liked your comment";
+      break;
+    case "comment_reply":
+      message = `was replied to your comment`;
+      break;
     default:
       message = "new notification";
       break;
@@ -37,7 +43,3 @@ export const pushNewNotification = async (
     $push: { notifications: newNotification._id },
   });
 };
-
-//new comment;
-//new follower
-// post like

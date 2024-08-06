@@ -5,10 +5,14 @@ import Masonry from "react-masonry-css";
 import LazyImage from "@/components/ui/lazy-image";
 import { FaSearch } from "react-icons/fa";
 import { usePostCommentMutation } from "@/api/services/commentServices";
+import { useSearchParams } from "react-router-dom";
 
 const GifPopoverContent = ({ postId, setGifPopoverTrigger }) => {
   const [query, setQuery] = useState("");
   const [addComment] = usePostCommentMutation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const commentIdToReply = searchParams.get("commentIdToReply") || "";
+
   const {
     data: gifs,
     isLoading,
@@ -22,8 +26,13 @@ const GifPopoverContent = ({ postId, setGifPopoverTrigger }) => {
     setQuery(e.target.value);
   };
 
+  // when user click gif send the comment
   const handleClickGif = async (gifUrl) => {
-    await addComment({ postId, gifUrl });
+    await addComment({ postId, gifUrl, parentComment: commentIdToReply });
+    setSearchParams((prev) => {
+      prev.delete("commentIdToReply");
+      return prev;
+    });
     setGifPopoverTrigger(false);
   };
 
@@ -35,7 +44,7 @@ const GifPopoverContent = ({ postId, setGifPopoverTrigger }) => {
     );
   }
 
-  if (isError || gifs.message) {
+  if (isError || gifs?.message) {
     return <h1 className="text-center mt-10">Some went wrong </h1>;
   }
 

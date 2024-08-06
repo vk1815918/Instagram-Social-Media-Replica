@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { showModal } from "@/store/slices/modalSlice";
 import VideoPlayer from "@/components/common/video-player";
 import { textSlicer } from "@/utils/text";
+import PostTextRender from "@/utils/post-text-render";
 
 const ReelCard = ({ reelData }) => {
   const { user, comments, likes, src } = reelData;
@@ -74,9 +75,12 @@ const ReelCard = ({ reelData }) => {
                 </span>
                 <h3 className="text-md">Eprhem Tamiru - gossaye</h3>
               </div>
-              <h2 className="text-sm">{textSlicer(reelData?.caption, 140)}</h2>
+              <PostTextRender
+                text={reelData.caption}
+                className={"text-sm"}
+                limit={100}
+              />
             </div>
-
             {/*Contaioner That hold Like, Sned, Comment, Saved */}
             <div className="flex flex-col gap-4 items-center">
               <div className="flex flex-col items-center">

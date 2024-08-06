@@ -13,7 +13,14 @@ const notificationSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["new_comment", "new_follow", "post_like", "comment_mention"],
+      enum: [
+        "new_comment",
+        "new_follow",
+        "post_like",
+        "comment_mention",
+        "comment_reply",
+        "comment_like",
+      ],
     },
     post: {
       type: Schema.Types.ObjectId,

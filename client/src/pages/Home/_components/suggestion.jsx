@@ -1,6 +1,7 @@
 import { useGetSuggestedAccountsQuery } from "@/api/services/othersServices";
 import FollowUnfollowActions from "@/components/common/buttons/follow-unfollow-actions";
 import ProfileCard from "@/components/common/profile-card";
+import SkeletonLoader from "@/components/ui/skeleton";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -9,19 +10,12 @@ const Suggestion = ({ containerClassName, limit }) => {
     useGetSuggestedAccountsQuery(limit);
 
   if (isLoading) {
-    return (
-      <div className="max-md:h-[100px] w-full flex justify-center">
-        Loading...
-      </div>
-    );
+    return <SuggestionLoader limit={limit} />;
   }
 
   if (isError) {
     return <div className="w-full py-10 flex justify-center"></div>;
   }
-
-  console.log(isError);
-  console.log(error);
 
   if (!data) {
     return;
@@ -66,3 +60,27 @@ const Suggestion = ({ containerClassName, limit }) => {
 };
 
 export default Suggestion;
+
+const SuggestionLoader = ({ limit }) => (
+  <div className="w-full flex flex-col gap-4 ">
+    {[...Array(limit || 5)].map((_, idx) => (
+      <div className="w-full flex gap-2" key={idx}>
+        <SkeletonLoader width={"50px"} height={"50px"} variant="circle" />
+        <div className="w-full flex flex-col  gap-1">
+          <SkeletonLoader
+            width={"70%"}
+            height={"13px"}
+            borderRadius={"50px"}
+            speed="2s"
+          />
+          <SkeletonLoader
+            width={"50%"}
+            height={"13px"}
+            borderRadius={"50px"}
+            speed="3s"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+);

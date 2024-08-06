@@ -9,10 +9,24 @@ const commentServieces = api.injectEndpoints({
       providesTags: ["comments"],
     }),
     postComment: builder.mutation({
-      query: ({ postId, text, gifUrl }) => ({
+      query: ({ postId, text, parentComment, gifUrl }) => ({
         url: `/post/${postId}/comment`,
         method: "POST",
-        body: { text, gifUrl },
+        body: { text, gifUrl, parentComment },
+      }),
+      invalidatesTags: ["comments"],
+    }),
+    deleteComment: builder.mutation({
+      query: (commentId) => ({
+        url: `/post/${commentId}/comment`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["comments"],
+    }),
+    toggleCommentLike: builder.mutation({
+      query: (commentId) => ({
+        url: `/post/${commentId}/comment/toggleLike`,
+        method: "PUT",
       }),
       invalidatesTags: ["comments"],
     }),
@@ -23,4 +37,6 @@ export const {
   useLazyGetPostCommentQuery,
   usePostCommentMutation,
   useGetPostCommentQuery,
+  useDeleteCommentMutation,
+  useToggleCommentLikeMutation,
 } = commentServieces;

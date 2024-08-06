@@ -6,13 +6,13 @@ const router = Router();
 
 router.get("/", postController.getAllPosts);
 router.get("/single/:id", postController.getSinglePost);
-router.post("/", auth, postController.createPost);
-router.put("/", auth, postController.updatePost);
-router.delete("/:id", auth, postController.deletePost);
-router.get("/my", auth, postController.getMyPosts);
+router.post("/", postController.createPost);
+router.put("/", postController.updatePost);
+router.delete("/:id", postController.deletePost);
+router.get("/my", postController.getMyPosts);
 router.get("/user/:username", postController.getUserPosts);
-router.post("/", auth, postController.createPost);
-router.post("/:postId/toggleLike", auth, postController.toggleLike);
+router.post("/", postController.createPost);
+router.post("/:postId/toggleLike", postController.toggleLike);
 router.get("/reels", postController.getAllReels);
 
 const postRoutes = router;

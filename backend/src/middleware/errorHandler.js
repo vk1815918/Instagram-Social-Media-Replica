@@ -1,8 +1,8 @@
-import chalk from 'chalk';
+import chalk from "chalk";
 const errorHandler = (err, req, res, next) => {
   console.log(chalk.red(err.name));
   if (err.name === "ValidationError") {
-    const validationErrors = err.details.map((d) => d.message);
+    const validationErrors = err.details?.map((d) => d.message);
     res.status(400).json({
       type: "ValidationError",
       errors: validationErrors,
@@ -10,9 +10,9 @@ const errorHandler = (err, req, res, next) => {
     return;
   }
 
-  if(err.name === 'ReferenceError' || err.name === 'TypeError'){
-    console.log(err)
-    return
+  if (err.name === "ReferenceError" || err.name === "TypeError") {
+    console.log(err);
+    return;
   }
 
   let statusCode = res.statusCode;

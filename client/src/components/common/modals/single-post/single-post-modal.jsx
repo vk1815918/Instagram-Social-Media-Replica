@@ -19,12 +19,13 @@ const SinglePostModal = ({}) => {
   const [searchParam, setSearchParam] = useSearchParams();
   const postID = searchParam.get("p");
 
-  const { data, isLoading, isFetching, isError } =
-    useGetSinglePostQuery(postID);
+  const { data, isLoading, isError } = useGetSinglePostQuery(postID);
 
   const closeModal = () => {
     setSearchParam((prev) => {
       prev.delete("p");
+      prev.has("commentIdToReply") && prev.delete("commentIdToReply");
+      prev.has("commentUserToReply") && prev.delete("commentUserToReply");
       return prev;
     });
     dispatch(hideModal({ modalName: "singlePost" }));
@@ -44,7 +45,7 @@ const SinglePostModal = ({}) => {
       <>
         {isError ? (
           <div className="flex items-center justify-center w-full h-full ">
-            <h3 className="bg-blue text-white py-4 px-8 rounded-md">
+            <h3 className=" text-white py-4 px-8 rounded-md">
               Some Error Occured
             </h3>
           </div>

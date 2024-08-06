@@ -6,7 +6,7 @@ const ReelsView = () => {
   return (
     <div className="w-full h-screen sm:h-[87vh] flex justify-center overflow-hidden">
       <div className="flex items-center gap-2 sm:hidden fixed top-4 left-4 z-50">
-        <CustomNavigator className="bg-black/0 cursor-pointer" to={-1}>
+        <CustomNavigator className="bg-black/0 cursor-pointer" to={"/"}>
           <AiOutlineArrowLeft className="text-xl" />
         </CustomNavigator>
 

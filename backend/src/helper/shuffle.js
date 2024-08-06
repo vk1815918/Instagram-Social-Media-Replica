@@ -1,4 +1,4 @@
-const shuffleArray = (array) => {
+export const shuffleArray = (array) => {
     let shuffledArray = array.slice(); // Copy the array
     let currentIndex = shuffledArray.length;
     let randomIndex;

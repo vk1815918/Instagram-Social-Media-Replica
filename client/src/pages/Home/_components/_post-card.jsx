@@ -59,7 +59,11 @@ const PostCard = ({ data }) => {
               <h3 className="text-xs/tight opacity-75">
                 {format(data.createdAt)}
               </h3>
-              <FollowUnfollowActions accountId={data.user._id} size="sm" />
+              <FollowUnfollowActions
+                withUnfollowBtn={false}
+                accountId={data.user._id}
+                size="sm"
+              />
             </div>
 
             <span className="cursor-pointer">
@@ -86,15 +90,15 @@ const PostCard = ({ data }) => {
                   <LazyImage
                     src={data.src}
                     alt={"Post image"}
-                    className="object-cover min-h-[350px] max-h-[500px] min-w-full max-w-[110%]"
+                    className="object-cover min-h-[400px] max-h-[500px] min-w-full max-w-[110%]"
                   />
                 </div>
               ) : (
-                <div className="w-full overflow-hidden">
+                <div className="bg-[gray]/40  w-full overflow-hidden">
                   <VideoPlayer
                     src={data.src}
                     alt="Video not Found"
-                    className="object-cover min-h-[250px] max-h-[550px] min-w-full max-w-[120%]"
+                    className="object-cover min-h-[350px] max-h-[550px] min-w-full max-w-[120%]"
                     videoClassName={"h-fit"}
                   />
                 </div>
@@ -133,15 +137,15 @@ const PostCard = ({ data }) => {
                 />
               </div>
 
-                <div className="min-h-fit flex flex-col">
-                  <span
-                    className=" text-white/70 hover:text-white/100 w-fit text-sm transition cursor-pointer"
-                    onClick={() => handleShowSinglePost(data._id)}
-                  >
-                    {data.comments.length === 0
-                      ? "Write First Comment"
-                      : `View all ${data.comments.length} Comments`}
-                  </span>
+              <div className="min-h-fit flex flex-col">
+                <span
+                  className=" text-white/70 hover:text-white/100 w-fit text-sm transition cursor-pointer"
+                  onClick={() => handleShowSinglePost(data._id)}
+                >
+                  {data.comments.length === 0
+                    ? "Write First Comment"
+                    : `View all ${data.comments.length} Comments`}
+                </span>
               </div>
             </div>
           </div>

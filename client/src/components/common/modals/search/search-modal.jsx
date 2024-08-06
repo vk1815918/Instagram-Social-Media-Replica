@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideModal } from "@/store/slices/modalSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { twMerge } from "tailwind-merge";
-import ProfileCard from "../../profile-card";
-import { useLazySearchQuery } from "@/api/services/othersServices";
 import { SpinnerLoader } from "../../loader";
+import SearchResult from "./_search-result";
+import { IoClose } from "react-icons/io5";
+import { handleHideModal } from "@/handler/modal-handlers";
 
 const SearchModal = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,6 @@ const SearchModal = () => {
   const inputRef = useRef(null);
   const [isInputFocus, setIsInputFocus] = useState(true);
   const [inputValue, setInputValue] = useState("");
-  const [search, { data, isLoading, isFetching, isError }] =
-    useLazySearchQuery();
 
   const closeModal = () => {
     dispatch(hideModal({ modalName: "search" }));
@@ -25,22 +24,29 @@ const SearchModal = () => {
     inputRef.current.value = "";
   };
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    await search(value);
   };
 
   return (
     <Modal
       overlayClassName="modal-overlay flex items-center justify-center max-sm:items-end"
-      className="modal h-screen w-screen max-sm:h-[60vh] rounded-xl sm:w-[350px] bg-[black] absolute top-0 left-0 bottom-0"
+      className="modal h-screen w-screen max-sm:h-[100vh] sm:rounded-xl sm:w-[350px] bg-[black] absolute top-0 left-0 bottom-0"
       isOpen={isOpen}
       onRequestClose={closeModal}
     >
       <div className="w-full h-full flex flex-col p-5">
         {/* Header */}
-        <header className="text-xl font-bold">Search</header>
+        <header className="flex justify-between">
+          <span
+            className="cursor-pointer text-lg sm:hidden"
+            onClick={() => handleHideModal("search")}
+          >
+            <IoClose />
+          </span>
+          <span className="text-xl font-bold">Search</span>
+        </header>
 
         {/* Input Bar  */}
         <div className="mt-3 w-full ">
@@ -59,59 +65,20 @@ const SearchModal = () => {
               }
             />
             <div className="px-2">
-              {isFetching ? (
-                <SpinnerLoader className="w-4" />
-              ) : (
-                <span
-                  onClick={handleClearSearchInput}
-                  className={twMerge(
-                    `cursor-pointer hidden ${isInputFocus && "block"}`
-                  )}
-                >
-                  <AiOutlineClose className="text-xs" />
-                </span>
-              )}
+              <span
+                onClick={handleClearSearchInput}
+                className={twMerge(
+                  `cursor-pointer hidden ${isInputFocus && "block"}`
+                )}
+              >
+                <AiOutlineClose className="text-xs" />
+              </span>
             </div>
           </div>
         </div>
 
         {/* Main content wrapper*/}
-
-        <div className="mt-10 w-full flex-1 px-2 overflow-y-scroll">
-          {isError ? (
-            <h3 className="text-center pt-10">Some error occuerd</h3>
-          ) : inputValue.length === 0 ? (
-            <div className="h-full w-full flex flex-col pt-5">
-              <h3>Recent</h3>
-              <div className="flex-1 flex items-center justify-center">
-                No Recent Search
-              </div>
-            </div>
-          ) : isLoading ? (
-            <div className="flex-1 flex items-center justify-center">
-              <SpinnerLoader className="w-10" />
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2 w-full ">
-              {data.length === 0 ? (
-                <div className="flex-1 flex items-center justify-center">
-                  No Result
-                </div>
-              ) : (
-                data?.map((itm, index) => (
-                  <ProfileCard
-                    verified={itm.verified}
-                    withVerified
-                    username={itm.username}
-                    withUsername
-                    avatarUrl={itm.profilePicture}
-                    key={index}
-                  />
-                ))
-              )}
-            </div>
-          )}
-        </div>
+        <SearchResult inputValue={inputValue} />
       </div>
     </Modal>
   );

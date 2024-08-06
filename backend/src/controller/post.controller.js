@@ -1,7 +1,6 @@
 import tryCatch from "../utils/tryCatch.js";
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
-import fs from "fs/promises";
 import { deleteSingleFile, uploader } from "../helper/cloudinary.js";
 import { pushNewNotification } from "../helper/push-notification.js";
 
@@ -10,7 +9,6 @@ const getAllPosts = tryCatch(async (req, res, next) => {
   const limit = Number(req.query.limit) || 6;
 
   const postsTotalCount = await Post.find().countDocuments();
-
   const postsDoc = await Post.find({})
     .populate("user")
     .limit(limit * page)
@@ -121,7 +119,7 @@ const getMyPosts = tryCatch(async (req, res, next) => {
     .select("posts -_id")
     .populate("posts")
     .sort({ createdAt: -1 });
-    
+
   res.json(data.posts);
 });
 
@@ -144,8 +142,9 @@ const toggleLike = tryCatch(async (req, res, next) => {
     return userId.toString() === authId.toString();
   });
 
+  // If user not liked make like and push user id to post likes
   if (!isUserLikeThisPost) {
-    const updatedPost = await Post.findByIdAndUpdate(
+    await Post.findByIdAndUpdate(
       postId,
       {
         $push: { likes: authId },
@@ -158,19 +157,19 @@ const toggleLike = tryCatch(async (req, res, next) => {
       await pushNewNotification(authId, "post_like", postDoc.user, postDoc._id);
     }
 
-    res.json(updatedPost);
+    res.json({ success: true });
     return;
   }
 
-  const updatedPost = await Post.findByIdAndUpdate(
+  // else user liked remove user like from the post
+  await Post.findByIdAndUpdate(
     postId,
     {
       $pull: { likes: authId },
     },
     { new: true }
   );
-  res.json(updatedPost);
-  console.log("Disliked Successfull");
+  res.json({ success: true });
 });
 
 const getAllReels = tryCatch(async (req, res, next) => {

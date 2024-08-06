@@ -12,6 +12,8 @@ const FollowUnfollowActions = ({
   followMessage,
   buttonsClassName,
   size = "md",
+  withFollowBtn = true,
+  withUnfollowBtn = true,
 }) => {
   const { isLoading: isUserLoading, user, isFaild: isUserFaild } = useAuth();
 
@@ -35,7 +37,7 @@ const FollowUnfollowActions = ({
     return;
   }
 
-  if (!followingStatus.isFollowing) {
+  if (withFollowBtn && !followingStatus.isFollowing) {
     return (
       <button
         onClick={handleFollow}
@@ -50,19 +52,20 @@ const FollowUnfollowActions = ({
     );
   }
 
-  return (
-    <button
-      onClick={handleUnfollow}
-      className={twMerge(
-        `rounded bg-[gray] cursor-pointer text-white ${
-          size === "sm" && "text-xs px-[8px]"
-        }
+  if (withUnfollowBtn)
+    return (
+      <button
+        onClick={handleUnfollow}
+        className={twMerge(
+          `rounded bg-[gray] cursor-pointer text-white ${
+            size === "sm" && "text-xs px-[8px]"
+          }
         ${size === "md" && "text-sm px-5"} ${buttonsClassName}`
-      )}
-    >
-      {unFollowMessage ? unFollowMessage : "Following"}
-    </button>
-  );
+        )}
+      >
+        {unFollowMessage ? unFollowMessage : "Following"}
+      </button>
+    );
 };
 
 export default FollowUnfollowActions;

@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "@/components/common/siderbar";
+import Sidebar from "@/components/common/sidebar";
 import Header from "@/components/common/small-deivce-header";
 import { SpinnerLoader } from "@/components/common/loader";
 

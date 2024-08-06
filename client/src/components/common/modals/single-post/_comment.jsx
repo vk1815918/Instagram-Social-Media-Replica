@@ -1,12 +1,12 @@
 // components/Comment.js
 import React, { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import ProfileCard from "../../profile-card";
 import { format } from "timeago.js";
 import LazyImage from "@/components/ui/lazy-image";
-import ToggleCommentLikeButton from "@/components/common/buttons/toggle-comment-like";
-import DeleteCommentButton from "@/components/common/buttons/delete-comment-btn";
+import DeleteCommentButton from "../../buttons/delete-comment-btn";
+import ToggleCommentLikeButton from "../../buttons/toggle-comment-like";
 import ReplyComment from "./_reply-comment";
-import ProfileCard from "@/components/common/profile-card";
 
 const Comment = ({ comment }) => {
   const [showReplies, setShowReplies] = useState(false);
@@ -26,7 +26,7 @@ const Comment = ({ comment }) => {
       return prev;
     });
   };
-
+  
   return (
     <li className="w-full ">
       <div className="flex items-start gap-2">

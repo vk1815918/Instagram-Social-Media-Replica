@@ -1,61 +1,47 @@
-import { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
-import { InputPrimary } from "@/components/common/input";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "@/api/services/authServices.js";
-// import { useLazyFetchCurrentProfileQuery } from "@/api/services/profileServices.js";
 import { toast } from "react-toastify";
-import { setToken } from "@/store/slices/authSlice";
-import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import ErrorMessage from "@/components/common/error-message";
+import { CustomNavigator } from "@/handler/navigator";
+
+export const LoginValidationSchema = yup.object({
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
+});
 
 const LoginView = () => {
-  const [usernameLabel, setUsernameLabel] = useState(false);
-  const [passwordLabel, setPasswordLabel] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+    resolver: yupResolver(LoginValidationSchema),
+  });
+  const [requestLogin] = useLoginMutation();
   const navigate = useNavigate();
-  const [postLogin] = useLoginMutation();
-  // const [fetchCurrentProfile] = useLazyFetchCurrentProfileQuery();
-  const dispatch = useDispatch();
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value.trim());
-    if (e.target.value.length >= 1) {
-      setUsernameLabel(true);
-    } else {
-      setUsernameLabel(false);
-    }
-  };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value.trim());
-    if (e.target.value.length >= 1) {
-      setPasswordLabel(true);
-    } else {
-      setPasswordLabel(false);
-    }
-  };
-  const handleSubmit = async () => {
-    if (!username || !password) {
-      toast.dark("All field are mandatory");
-      return;
-    }
-
-    const userData = { username, password };
+  const onSubmit = async (data) => {
     try {
-      const res = await postLogin(userData).unwrap();
-      dispatch(setToken(res.accessToken));
-      toast.dark(res.message);
-      navigate("/dsffd");
+      const res = await requestLogin(data).unwrap();
+      toast.dark(res.message, {
+        className: "dark:bg-black dark:text-white",
+      });
+      navigate("/");
     } catch (error) {
-      toast.dark(error?.data?.message || "Please try agian");
-      console.log(error);
+      toast.dark("Please try agian", {
+        className: "dark:bg-black dark:text-white",
+      });
     }
   };
 
-  const handleNavugatteToSignUp = () => {
-    navigate("/signup");
-  };
   return (
     <div className="w-full min-h-screen flex gap-4 items-center justify-center text-white">
       <div className="flex gap-5 w-full md:pl-40 justify-center">
@@ -92,56 +78,61 @@ const LoginView = () => {
                   {/* --------Form----------- */}
                   <form
                     className="flex flex-col mt-4"
-                    onSubmit={(e) => e.preventDefault()}
+                    onSubmit={handleSubmit(onSubmit)}
                   >
-                    <InputPrimary
-                      label="Username "
-                      labelType={usernameLabel}
-                      onChange={handleUsernameChange}
-                      type="text"
-                    />
-                    <InputPrimary
-                      label={"Password"}
-                      labelType={passwordLabel}
-                      onChange={handlePasswordChange}
-                      type="password"
-                    />
-                    <div className="w-full mt-4">
-                      <button
-                        className="btn-primary w-full text-sm"
-                        onClick={handleSubmit}
-                      >
-                        Log in
-                      </button>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2">
+                        <input
+                          className="px-2 py-1 bg-[gray]/50 text-sm"
+                          placeholder="Username"
+                          type="text"
+                          {...register("username")}
+                        />
+                        <ErrorMessage error={errors?.username?.message} />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <input
+                          className="px-2 py-1 bg-[gray]/50 text-sm"
+                          placeholder="Password"
+                          type="password"
+                          {...register("password")}
+                        />
+                        <ErrorMessage error={errors?.password?.message} />
+                      </div>
                     </div>
-                    {/* ----- OR -----  */}
-                    <div className="flex gap-4 items-center">
-                      <span className="flex-1 w-full h-[1px] bg-cool-white/60"></span>
-                      <span className="text-sm"> OR</span>
-                      <span className="flex-1 w-full h-[1px] bg-cool-white/60"></span>
-                    </div>
-                    <div className=" flex justify-center">
-                      <a
-                        href="#"
-                        className=" text-[12px] text-blue cursor-pointer text-center hover:text-white transition flex space-x-2 items-center"
-                      >
-                        <span>
-                          <FaFacebook />
-                        </span>
-                        <span>Log in with facebook</span>
-                      </a>
-                    </div>
-                    <div className=" flex justify-center">
-                      <a
-                        href="#"
-                        className=" text-[12px] text-blue cursor-pointer text-center hover:text-white transition flex space-x-2 items-center"
-                      >
-                        <span className=" text-xs text-cool-white cursor-pointer text-center hover:text-white transition flex space-x-2 items-center">
-                          Forgot password?
-                        </span>
-                      </a>
-                    </div>
+
+                    <button className="btn-primary mt-4 w-full text-sm">
+                      Log in
+                    </button>
                   </form>
+                  {/* ----- OR -----  */}
+                  <div className="flex gap-4 items-center">
+                    <span className="flex-1 w-full h-[1px] bg-cool-white/60"></span>
+                    <span className="text-sm"> OR</span>
+                    <span className="flex-1 w-full h-[1px] bg-cool-white/60"></span>
+                  </div>
+                  <div className=" flex justify-center">
+                    <a
+                      href="#"
+                      className=" text-[12px] text-blue cursor-pointer text-center hover:text-white transition flex space-x-2 items-center"
+                    >
+                      <span>
+                        <FaFacebook />
+                      </span>
+                      <span>Log in with facebook</span>
+                    </a>
+                  </div>
+                  <div className=" flex justify-center">
+                    <a
+                      href="#"
+                      className=" text-[12px] text-blue cursor-pointer text-center hover:text-white transition flex space-x-2 items-center"
+                    >
+                      <span className=" text-xs text-cool-white cursor-pointer text-center hover:text-white transition flex space-x-2 items-center">
+                        Forgot password?
+                      </span>
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -150,12 +141,12 @@ const LoginView = () => {
                 <div className="">
                   <div className="text-sm text-white space-x-2 flex">
                     <h3>Don't have an account?</h3>
-                    <a
-                      className="cursor-pointer text-blue"
-                      onClick={handleNavugatteToSignUp}
+                    <CustomNavigator
+                      to={"/signup"}
+                      className="cursor-pointer text-primary-500 font-bold "
                     >
                       Sign up
-                    </a>
+                    </CustomNavigator>
                   </div>
                 </div>
               </div>

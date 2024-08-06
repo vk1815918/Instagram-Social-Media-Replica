@@ -13,7 +13,7 @@ const MediaContainer = ({ post }) => {
       ) : (
         <VideoPlayer
           src={post.src}
-          videoClassName=" object-contain w-full h-full transition-all"
+          videoClassName=" object-contain w-full transition-all"
           alt="Reel"
         />
       )}

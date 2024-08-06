@@ -1,7 +1,7 @@
 import DeletePostButton from "@/components/common/buttons/delete-post-btn";
 import FollowUnfollowActions from "@/components/common/buttons/follow-unfollow-actions";
 import ProfileCard from "@/components/common/profile-card";
-import { isAuthor } from "@/utils/isAuthor";
+import { isAuthor } from "@/utils/utils";
 import React from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 

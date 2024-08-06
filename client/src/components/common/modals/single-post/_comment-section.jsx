@@ -3,7 +3,7 @@ import ProfileCard from "../../profile-card";
 import { format } from "timeago.js";
 import { useLazyGetPostCommentQuery } from "@/api/services/commentServices";
 import { SpinnerLoader } from "../../loader";
-import Comment from "./__comment";
+import Comment from "./_comment";
 
 const CommentSection = ({ post, postID }) => {
   const [getComments, { data: comments, isLoading, isFetching, isError }] =
@@ -30,40 +30,6 @@ const CommentSection = ({ post, postID }) => {
       <ul className="w-full flex-col space-y-5">
         {
           <>
-            {/* ----Author Text Body----- */}
-
-            <li className="w-full ">
-              <ul className="flex items-start gap-2">
-                <ProfileCard
-                  username={post?.user?.username}
-                  avatarUrl={post?.user?.profilePicture}
-                  withUsername={false}
-                  withVerified={false}
-                  avatarClassName="w-8"
-                />
-
-                <li className="flex-1 flex flex-col">
-                  <div>
-                    <ProfileCard
-                      username={post?.user?.username}
-                      withUsername
-                      withVerified
-                      verified={post?.user?.verified}
-                      usernameClassName={"text-[17px]"}
-                    />
-                    <h3 className="text-[15px] leading-tight">
-                      {post?.caption}
-                    </h3>
-                  </div>
-
-                  <div className="opacity-70 space-x-2 ">
-                    <span className="text-xs">{format(post?.createdAt)}</span>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            {/* Single Comment */}
-
             {comments &&
               comments?.map((comment) => (
                 <Comment key={comment?._id} comment={comment} />

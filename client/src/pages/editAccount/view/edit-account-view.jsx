@@ -70,7 +70,7 @@ const EditAccountView = () => {
                   className="bg-red/0 py-3 w-full text-md"
                   placeholder="Website"
                   name="website"
-                  value={profileInfo.website}
+                  value={profileInfo.website} 
                   onChange={handleProfileInfosChange}
                 />
               </div>

@@ -5,7 +5,7 @@ import { format } from "timeago.js";
 
 const FollowNotification = ({ data }) => {
   return (
-    <div className="w-full h-12 flex items-center justify-between">
+    <div className="w-full flex items-center justify-between">
       <div className="flex items-center gap-2">
         <ProfileCard
           avatarUrl={data.user?.profilePicture}

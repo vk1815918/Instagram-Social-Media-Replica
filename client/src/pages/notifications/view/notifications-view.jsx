@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useMakeAsReadNotificationsMutation } from "@/api/services/notificationService";
 import LikeNotification from "../_components/like-notification";
 import MentionNotification from "../_components/mention-notification";
+import CommentLikeNotification from "../_components/comment-like";
 
 const NotificationsView = () => {
   const [makeAsReadAllNotifications] = useMakeAsReadNotificationsMutation();
@@ -24,12 +25,21 @@ const NotificationsView = () => {
         return (
           <NewCommentNotification key={notification._id} data={notification} />
         );
+      case "comment_reply":
+        return (
+          <NewCommentNotification key={notification._id} data={notification} />
+        );
       case "comment_mention":
         return (
           <MentionNotification key={notification._id} data={notification} />
         );
       case "post_like":
         return <LikeNotification key={notification._id} data={notification} />;
+
+      case "comment_like":
+        return (
+          <CommentLikeNotification key={notification._id} data={notification} />
+        );
     }
   };
 

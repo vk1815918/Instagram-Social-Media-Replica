@@ -6,7 +6,7 @@ import { format } from "timeago.js";
 
 const LikeNotification = ({ data }) => {
   return (
-    <div className="w-full h-12 flex items-center justify-between rounded-2xl">
+    <div className="w-full flex items-center justify-between rounded-2xl">
       <div className="flex items-center gap-2">
         <ProfileCard
           avatarUrl={data.user?.profilePicture}
@@ -24,7 +24,7 @@ const LikeNotification = ({ data }) => {
       </div>
 
       <div className="flex items-center gap-2">
-        <BsHeartFill className="text-red text-[20px]" />
+        <BsHeartFill className="text-red text-[13px]" />
         <CustomNavigator
           to={`/p/${data?.post?._id}`}
           className="text-sm cursor-pointer"

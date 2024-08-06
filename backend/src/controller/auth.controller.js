@@ -1,25 +1,27 @@
 import tryCatch from "../utils/tryCatch.js";
 import User from "../models/user.model.js";
-import { registerSchema, loginSchema } from "../validator/validation.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import signJWT from "../utils/signJWT.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 
 const register = tryCatch(async (req, res, next) => {
-  //  Handle Validation Error From Joi 👇🏼
-  const { error: validationError } = registerSchema.validate(req.body, {
-    abortEarly: false,
-  });
-  if (validationError) {
-    next(validationError);
-    return;
+  const { fullName, email, password, username } = req.body;
+
+  if (!fullName || !email || !password || !username) {
+    res.status(400);
+    throw new Error("Invalid request");
+  }
+
+  // Check the username is valid charachter
+  const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[a-zA-Z0-9._]{1,30}$/;
+  if (!usernameRegex.test(username)) {
+    res.status(400);
+    throw new Error("Invalid username try again");
   }
 
   // Checking Username is Taken 👇🏼
   const isUsernameTaken = await User.exists({ username: req.body.username });
   if (isUsernameTaken) {
-    console.log(isUsernameTaken);
     res.status(400);
     throw new Error("Username Already is taken");
   }
@@ -37,7 +39,9 @@ const register = tryCatch(async (req, res, next) => {
 
   // Storing User Info to Database 👇🏼
   await User.create({
-    ...req.body,
+    email: req.body.email,
+    fullName: req.body.fullName,
+    username: req.body.username.trim(),
     password: hashedPassword,
   });
   res
@@ -47,9 +51,10 @@ const register = tryCatch(async (req, res, next) => {
 
 const login = tryCatch(async (req, res, next) => {
   // Validation 👇🏼
-  const { error: validationError } = loginSchema.validate(req.body);
-  if (validationError) {
-    return next(validationError);
+  const { password, username } = req.body;
+  if (!password || !username) {
+    res.status(400);
+    throw new Error("Invalid request");
   }
 
   // Check User is Exists or not👇🏼
@@ -71,9 +76,6 @@ const login = tryCatch(async (req, res, next) => {
     res.status(400);
     throw new Error("Password is not correct");
   }
-
-  //Genrate Token and Sign token with jwt 👇🏼
-  const payload = { userId: userDoc._id };
 
   // Generate Token then Send Refresh Token Via Cookie and send  accessToken as a response
   const refreshToken = generateRefreshToken(userDoc._id);

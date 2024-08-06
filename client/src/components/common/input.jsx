@@ -8,6 +8,7 @@ export const InputPrimary = ({
   labelType,
   error,
   value,
+  ...props
 }) => {
   const [passHidded, setPassHidded] = useState(true);
   const inputRef = useRef(null);
@@ -30,8 +31,8 @@ export const InputPrimary = ({
           className="w-full pt-[6px] pb-[1px] peer px-4  bg-[#000000] border border-[#c7c7c7]  border-opacity-60 text-sm "
           onChange={onChange}
           name={name ?? ""}
-          required
           ref={inputRef}
+          {...props}
           // value={value}
         />
 

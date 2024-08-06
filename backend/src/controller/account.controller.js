@@ -119,17 +119,6 @@ const checkFollowingStatus = tryCatch(async (req, res, next) => {
   res.json({ isFollowing });
 });
 
-// const suggested = tryCatch(async (req, res, next) => {
-//   const userDoc = req.userDoc;
-//   console.log(userDoc);
-//   res.json({});
-//   // const suggestedAccounts = await User.find({
-//   //   _id: { $not: userDoc._id },
-//   // }).sort({ createdAt: [-1, 1][Math.ceil(Math.random() * 2)] });
-//   // console.log("suggested", suggestedAccounts);
-//   // res.json([]);
-// });
-
 const getFollowersFollowing = tryCatch(async (req, res, next) => {
   const userId = req.userDoc._id;
   const result = await User.findById(userId)

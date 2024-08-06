@@ -8,17 +8,18 @@ const profileServices = api.injectEndpoints({
         url: "/profile/me",
         method: "GET",
       }),
-      providesTags: ["current_profile"],
       onQueryStarted(id, { dispatch, queryFulfilled }) {
         dispatch(setUser({ status: "loading", data: null }));
         queryFulfilled
           .then((res) => {
+            console.log("auth profile response", res);
             dispatch(setUser({ status: "succeeded", data: res.data }));
           })
           .catch(() => {
             dispatch(setUser({ status: "faild", data: null }));
           });
       },
+      providesTags: ["current_profile"],
     }),
     updateProfilePic: builder.mutation({
       query: (fd) => ({

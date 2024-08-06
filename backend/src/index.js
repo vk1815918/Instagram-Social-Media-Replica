@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import chalk from "chalk";
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
 
 // Route Config 👇🏼
 app.use("/api", rootRouter);

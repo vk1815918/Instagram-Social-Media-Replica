@@ -41,6 +41,7 @@ const SinglePostView = () => {
           <div className="w-full md:hidden p-3">
             <Header post={data} />
           </div>
+
           <MediaContainer post={data} />
 
           <div className="w-full p-3 md:hidden">
@@ -49,24 +50,18 @@ const SinglePostView = () => {
         </div>
 
         {/* Comment section for big screen only */}
-        <div className="w-[400px] h-[90vh] max-md:hidden">
-          <div className="bg-black h-full p-3 overflow-hidden">
-            {isLoading ? (
-              //  Right Section Loader
-              "Loading..."
-            ) : (
-              // Right Sction Contents
-              <ul className=" flex flex-col h-full">
-                {/* ------ Header------ */}
-                <Header post={data} />
+        <div className="w-[600px] h-[90vh] max-md:hidden">
+          <div className=" h-full p-3 overflow-hidden">
+            <ul className=" flex flex-col h-full">
+              {/* ------ Header------ */}
+              <Header post={data} />
 
-                {/* Comment Section */}
-                <CommentSection post={data} postID={postId} />
+              {/* Comment Section */}
+              <CommentSection post={data} postID={postId} />
 
-                {/* Bottom / Actions Section */}
-                <Footer post={data} postID={postId} />
-              </ul>
-            )}
+              {/* Bottom / Actions Section */}
+              <Footer post={data} postID={postId} />
+            </ul>
           </div>
         </div>
       </div>

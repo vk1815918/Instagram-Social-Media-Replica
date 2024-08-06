@@ -3,7 +3,7 @@ import TogglePostLike from "../../buttons/toggle-post-like";
 import { FaRegBookmark, FaRegComment } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import { format } from "timeago.js";
-import CommentForm from "./__comment-form";
+import CommentForm from "./_comment-form";
 
 const Footer = ({ post, postID }) => {
   return (
@@ -38,7 +38,7 @@ const Footer = ({ post, postID }) => {
       </div>
 
       {/* new comment Input and submit button here */}
-      <CommentForm postId={postID} />
+      <CommentForm postId={postID} postAuthor={post?.user?._id} />
     </li>
   );
 };

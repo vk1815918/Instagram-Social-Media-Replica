@@ -1,21 +1,15 @@
 import { Router } from "express";
 import accountController from "../controller/account.controller.js";
-import auth from "../middleware/auth.js";
 const router = Router();
 
-router.get(
-  "/followers-following",
-  auth,
-  accountController.getFollowersFollowing
-);
+router.get("/followers-following", accountController.getFollowersFollowing);
 router.get("/:username", accountController.getUserAccount);
-router.post("/:id/follow", auth, accountController.follow);
-router.post("/:id/unfollow", auth, accountController.unfollow);
-router.get("/:username/following", auth, accountController.getFollowing);
-router.get("/:username/followers", auth, accountController.getFollowers);
+router.post("/:id/follow", accountController.follow);
+router.post("/:id/unfollow", accountController.unfollow);
+router.get("/:username/following", accountController.getFollowing);
+router.get("/:username/followers", accountController.getFollowers);
 router.get(
   "/:accountId/checkFollowingStatus",
-  auth,
   accountController.checkFollowingStatus
 );
 

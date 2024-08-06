@@ -1,13 +1,15 @@
 import { Router } from "express";
 import commentController from "../controller/comment.controller.js";
-import auth from "../middleware/auth.js";
 
 const router = Router();
 
-router.get("/:postId/comment", auth, commentController.getPostComments);
-router.post("/:postId/comment", auth, commentController.postNewComment);
-router.delete("/:commentId/comment", auth, commentController.deleteComment);
-// router.put("/:postId/comment", auth, commentController.updateComment);
+router.get("/:postId/comment", commentController.getPostComments);
+router.post("/:postId/comment", commentController.postNewComment);
+router.delete("/:commentId/comment", commentController.deleteComment);
+router.put(
+  "/:commentId/comment/toggleLike",
+  commentController.toggleCommentLike
+);
 
 const commentRoutes = router;
 export default commentRoutes;

@@ -11,19 +11,19 @@ const SignupPage = lazy(() => import("../pages/signup/signup-page.jsx"));
 const ProfilePage = lazy(() => import("../pages/profile/profile-page.jsx"));
 const ReelsPage = lazy(() => import("../pages/reels/reels-page.jsx"));
 const ExplorePage = lazy(() => import("../pages/explore/explore-page.jsx"));
-import StoriesPage from "@/pages/stories/stories-page";
-
-// UseAuth
-import useAuth from "@/hooks/use-auth";
-import NotFoundPage from "@/pages/not-found-page";
-import SinglePostPage from "@/pages/single-post/single-post-page";
-
+const StoriesPage = lazy(() => import("@/pages/stories/stories-page"));
+const NotFoundPage = lazy(() => import("@/pages/not-found-page"));
+const SinglePostPage = lazy(() =>
+  import("@/pages/single-post/single-post-page")
+);
 const EditAccountPage = lazy(() =>
   import("../pages/editAccount/edit-account-page.jsx")
 );
 const NotificationsPage = lazy(() =>
   import("../pages/notifications/notifications-page.jsx")
 );
+// UseAuth
+import useAuth from "@/hooks/use-auth";
 
 // Config for all routes👇🏼
 const Routes = () => {
