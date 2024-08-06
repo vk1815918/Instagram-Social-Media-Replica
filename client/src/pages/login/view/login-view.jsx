@@ -27,7 +27,7 @@ const LoginView = () => {
     },
     resolver: yupResolver(LoginValidationSchema),
   });
-  const [requestLogin] = useLoginMutation();
+  const [requestLogin, {isLoading}] = useLoginMutation();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -96,8 +96,8 @@ const LoginView = () => {
                       </div>
                     </div>
 
-                    <button className="btn-primary mt-4 w-full text-sm">
-                      Log in
+                    <button className="btn-primary mt-4 w-full text-sm" disabled={isLoading} >
+                     { isLoading ? 'Loading...' : 'Log in' }
                     </button>
                   </form>
                   {/* ----- OR -----  */}
