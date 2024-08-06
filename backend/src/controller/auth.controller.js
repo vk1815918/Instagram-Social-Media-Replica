@@ -89,7 +89,7 @@ const login = tryCatch(async (req, res, next) => {
       httpOnly: true,
       path: "/",
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax", //lax in dev and none in production
+      sameSite: "None", //lax in dev and none in production
       maxAge: 30 * 24 * 60 * 60 * 1000, //30 days
     })
     .json({ accessToken, message: "Login Successfully" });

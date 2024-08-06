@@ -25,6 +25,14 @@ const CommentSection = ({ post, postID }) => {
     return <div className="flex-1 text-center pt-10">Some error occured</div>;
   }
 
+  if (comments?.length === 0) {
+    return (
+      <div className="flex-1 w-full flex justify-center items-center">
+        <h2>No comment yet!</h2>
+      </div>
+    );
+  }
+
   return (
     <li className="w-full overflow-y-scroll flex-1 py-4 px-1">
       <ul className="w-full flex-col space-y-5">

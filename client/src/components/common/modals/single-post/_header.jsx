@@ -4,7 +4,7 @@ import ProfileCard from "../../profile-card";
 
 const Header = ({ post }) => {
   return (
-    <li className="h-[40px]">
+    <li className="h-[40px] ">
       <ul className="w-full flex justify-between items-center">
         <div className="flex items-center gap-1 ">
           <ProfileCard
