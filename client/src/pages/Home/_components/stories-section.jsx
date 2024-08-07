@@ -54,7 +54,11 @@ const Stories = () => {
     <div className="px-2 max-w-[100%] flex gap-3 sm:gap-5 no-scrollbar  overflow-x-scroll ">
       <div className="text-center cursor-pointer">
         <div className="relative size-[80px]">
-          <StorieAvatar width="80px" src={user?.profilePicture} />
+          <StorieAvatar
+            withRing={false}
+            width="80px"
+            src={user?.profilePicture}
+          />
 
           <span className="absolute bottom-0 -right-[2px] bg-blue text-white size-[20px] rounded-full cursor-pointer grid place-content-center">
             <BiPlus />
