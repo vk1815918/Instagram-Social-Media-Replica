@@ -214,11 +214,6 @@ body {
 .animation-top-bottom {
   animation-name: loading-top-bottom;
 }
-
-.variant-rectangle {
-  border-radius: 4px;
-}
-
 .variant-circle {
   aspect-ratio: 1/1;
   border-radius: 50%;

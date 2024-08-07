@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 const SkeletonLoader = ({
   width,
   height,
-  borderRadius = "10px",
+  borderRadius = undefined,
   animationDirection = "left-right",
   colorScheme = "dark",
   variant = "rectangle",

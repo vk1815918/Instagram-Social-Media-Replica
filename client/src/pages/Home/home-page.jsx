@@ -10,12 +10,8 @@ const HomePage = () => {
     navigate("/login");
     return;
   }
-  
-  return (
-    <div className="w-[100%]">
-      <HomeView />
-    </div>
-  );
+
+  return <HomeView />;
 };
 
 export default HomePage;

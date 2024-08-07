@@ -51,10 +51,11 @@ const Stories = () => {
   return isLoading ? (
     <StoriesLoader />
   ) : (
-    <div className="px-1 no-scrollbar max-w-[100%] flex  gap-3 sm:gap-5 overflow-x-scroll ">
+    <div className="px-2 max-w-[100%] flex gap-3 sm:gap-5 no-scrollbar  overflow-x-scroll ">
       <div className="text-center cursor-pointer">
-        <div className="relative w-[60px] sm:w-[70px]">
-          <StorieAvatar withRing={false} src={user?.profilePicture} />
+        <div className="relative size-[80px]">
+          <StorieAvatar width="80px" src={user?.profilePicture} />
+
           <span className="absolute bottom-0 -right-[2px] bg-blue text-white size-[20px] rounded-full cursor-pointer grid place-content-center">
             <BiPlus />
           </span>
@@ -66,7 +67,7 @@ const Stories = () => {
       {stories.map((story, idx) => (
         <div className="text-center cursor-pointer">
           <StorieAvatar
-            className={"w-[60px] sm:w-[70px]"}
+            className={"w-[80px]"}
             src={story.profilePicture}
             withRing
           />

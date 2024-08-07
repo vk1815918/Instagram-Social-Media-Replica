@@ -79,14 +79,14 @@ const PostListContainer = () => {
 export default PostListContainer;
 
 const PostLoader = () => (
-  <div className="px-2 w-full flex flex-col gap-10 sm:gap-20 items-center">
+  <div className=" w-full flex flex-col gap-10 sm:gap-20 items-center">
     {/* Single Card Loader */}
     {[
       [...Array(3)].map(() => (
         <div className="max-sm:w-full sm:w-[65%] min-h-fit justify-center">
           <div className="w-full flex flex-col items-center gap-4">
             {/* Header */}
-            <div className="w-full flex gap-2">
+            <div className="px-2 w-full flex gap-2">
               <SkeletonLoader width={"35px"} variant="circle" />
               <div className="w-full flex flex-col  gap-1">
                 <SkeletonLoader
@@ -108,7 +108,7 @@ const PostLoader = () => (
             <SkeletonLoader
               width={"100%"}
               height={"55vh"}
-              borderRadius={"6px"}
+              className="rounded-none sm:rounded-md"
             />
           </div>
         </div>

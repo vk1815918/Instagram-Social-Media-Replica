@@ -16,7 +16,7 @@ const MainLayout = () => {
         <SmallDeviceMenu />
       </div>
 
-      <div className="w-[100%] sm:pl-[100px] lg:pl-[350px] h-fit  max-sm:pb-[90px] max-sm:mt-[75px] sm:px-10 sm:py-8">
+      <div className="w-[100%] sm:pl-[100px] lg:pl-[350px] h-fit  max-sm:pb-[90px] max-sm:mt-[65px] sm:px-10 sm:py-8">
         <React.Suspense
           fallback={
             <div className="w-full h-[60vh] sm:h-[100vh] flex items-center justify-center bg-black">

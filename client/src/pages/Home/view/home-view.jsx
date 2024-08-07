@@ -8,7 +8,7 @@ const HomeView = () => {
     <>
       <main className="grid grid-cols-[65%,35%] gap-10 w-[100%] max-lg:grid-cols-[100%]">
         <div className="min-h-screen">
-          <div className=" gap-[30px] flex flex-col">
+          <div className="gap-[15px] sm:gap-[30px] flex flex-col">
             {/* ------- Stoire Container -------- */}
             <Stories />
 

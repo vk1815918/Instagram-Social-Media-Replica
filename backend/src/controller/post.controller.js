@@ -13,6 +13,7 @@ const getAllPosts = tryCatch(async (req, res, next) => {
     .populate("user")
     .limit(limit * page)
     .sort({ createdAt: -1 });
+    k
   res.json({
     posts: postsDoc,
     currentPage: page,
