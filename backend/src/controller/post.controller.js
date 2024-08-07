@@ -3,6 +3,7 @@ import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 import { deleteSingleFile, uploader } from "../helper/cloudinary.js";
 import { pushNewNotification } from "../helper/push-notification.js";
+import { shuffleArray } from "../helper/shuffle.js";
 
 const getAllPosts = tryCatch(async (req, res, next) => {
   const page = Number(req.query.page) || 1;
@@ -13,7 +14,7 @@ const getAllPosts = tryCatch(async (req, res, next) => {
     .populate("user")
     .limit(limit * page)
     .sort({ createdAt: -1 });
-    
+
   res.json({
     posts: postsDoc,
     currentPage: page,
@@ -177,7 +178,7 @@ const getAllReels = tryCatch(async (req, res, next) => {
   const allReels = await Post.find({ type: "reel" })
     .populate("user", "username verified profilePicture followers")
     .sort({ createdAt: -1 });
-  res.json(allReels);
+  res.json(shuffleArray(allReels));
 });
 
 const postController = {

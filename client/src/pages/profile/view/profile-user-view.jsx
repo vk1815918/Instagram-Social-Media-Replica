@@ -30,7 +30,7 @@ const ProfileUserview = ({ username: reqUsername }) => {
   if (isLoading) {
     return (
       <div className="w-full flex justify-center py-10">
-        <SpinnerLoader className={"w-[30px]"} />
+        <SpinnerLoader className={"size-[30px]"} />
       </div>
     );
   }
