@@ -120,7 +120,7 @@ To run this project locally, follow these steps:
 
 ### Additional Features
 
-- **Real-Time Notifications**: WebSocket (Socket.IO) integration for instant updates.
+- **Notifications**
 - **Optimized API**: RESTful API with efficient state synchronization via RTK Query.
 
 ## Contributing
