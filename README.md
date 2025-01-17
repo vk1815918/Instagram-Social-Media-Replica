@@ -52,9 +52,39 @@ To run this project locally, follow these steps:
    Create a `.env` file in the `backend` directory with the following content:
 
    ```env
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   CLOUDINARY_URL=your_cloudinary_url # For image and video uploads
+   # MongoDB database connection string
+   MONGODB_URI= 
+
+   # Port number for the server to listen on
+   PORT=
+
+   # Secret key for JWT authentication
+   _JWT_KEY=
+
+   # Secrets for access and refresh tokens used in authentication
+   ACCESS_TOKEN_SECRET= 
+   REFRESH_TOKEN_SECRET=
+
+   # Giphy API key for accessing GIFs
+   GIFHY_API_KEY=
+
+   # Cloudinary credentials for managing image uploads
+   CLOUDINARY_CLOUD_NAME= 
+   CLOUDINARY_API_KEY= 
+   CLOUDINARY_API_SECRET=
+
+   # The frontend URL of the Instagram Clone app
+   FRONTEND_URL=
+
+   # Default profile image URL for new users
+   DEFAULT_PROFILE_IMAGE=
+   ```
+
+   Create a `.env` file in the `client` directory with the following content:
+
+   ```env
+   # Base server url of backend
+   VITE_SERVER_URL= //add your server url
    ```
 
 5. **Start the development servers**:
