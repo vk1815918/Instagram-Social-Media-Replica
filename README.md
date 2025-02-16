@@ -26,7 +26,7 @@ To run this project locally, follow these steps:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/Solaget/instagram-clone.git
+   git clone https://github.com/solomongetnet/instagram-clone.git
    ```
 
 2. **Navigate to the project directory**:
