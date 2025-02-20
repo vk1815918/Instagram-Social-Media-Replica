@@ -41,7 +41,7 @@ const register = tryCatch(async (req, res, next) => {
   await User.create({
     email: req.body.email,
     fullName: req.body.fullName,
-    username: req.body.username.trim(),
+    username: req.body.username.toLowerCase().trim(),
     password: hashedPassword,
   });
   res
@@ -58,10 +58,10 @@ const login = tryCatch(async (req, res, next) => {
   }
 
   // Check User is Exists or not👇🏼
-  const isUserExist = await User.exists({ username: req.body.username });
+  const isUserExist = await User.exists({ username: req.body.username.toLowerCase() });
   if (!isUserExist) {
     res.status(404);
-    throw new Error("Username is not found");
+    throw new Error("User bot found");
   }
 
   // Getting UserInfo Using Username 👇🏼
@@ -74,7 +74,7 @@ const login = tryCatch(async (req, res, next) => {
   const isPassOk = bcrypt.compareSync(req.body.password, hashedPass);
   if (!isPassOk) {
     res.status(400);
-    throw new Error("Password is not correct");
+    throw new Error("User not found");
   }
 
   // Generate Token then Send Refresh Token Via Cookie and send  accessToken as a response

@@ -27,6 +27,14 @@ const follow = tryCatch(async (req, res, next) => {
     res.status(400);
     throw new Error("You can't follow your self");
   }
+   
+  // Check if the user has already followed the account
+  const authUser = await User.findById(authId);
+ 
+ if (authUser.following.includes(userAccount._id)) {
+    res.status(400);
+    throw new Error("You already follow this account");
+  }
 
   // Follow account;
   await User.findByIdAndUpdate(authId, {

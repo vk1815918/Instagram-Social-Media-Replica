@@ -178,7 +178,7 @@ const getAllReels = tryCatch(async (req, res, next) => {
   const allReels = await Post.find({ type: "reel" })
     .populate("user", "username verified profilePicture followers")
     .sort({ createdAt: -1 });
-  res.json(shuffleArray(allReels));
+  res.json(allReels);
 });
 
 const postController = {
