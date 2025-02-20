@@ -22,8 +22,8 @@ const LoginView = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "",
-      password: "",
+      username: "solomon",
+      password: "123456",
     },
     resolver: yupResolver(LoginValidationSchema),
   });
@@ -65,8 +65,13 @@ const LoginView = () => {
               {/* ----------Form Container---------*/}
               <div className="w-full h-fit border border-[#c7c7c7]  border-opacity-60">
                 <div className="w-full flex flex-col pt-10 px-5">
-                  <header className="w-full flex justify-center">
+                  <header className="w-full flex flex-col items-center justify-center gap-3">
                     <img src={instagramLogo} alt="" className="w-[180px]" />
+
+                    <h2 className="texdt-center text-sm text-cool-white">
+                      Simply hit login to instantly explore the Instagram clone
+                      using the pre-filled test credentials.
+                    </h2>
                   </header>
 
                   {/* --------Form----------- */}
