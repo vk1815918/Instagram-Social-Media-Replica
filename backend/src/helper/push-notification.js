@@ -1,36 +1,23 @@
 import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
 
+// Centralized message lookup for notification types
+const notificationMessages = {
+  new_follow: "started follow you",
+  new_comment: "write comment on your post",
+  post_like: "liked your post",
+  comment_mention: "You were mentioned in a comment",
+  comment_like: "was liked your comment",
+  comment_reply: "was replied to your comment",
+};
+
 export const pushNewNotification = async (
   user,
   type,
   recipientUserId,
   postId
 ) => {
-  let message;
-  switch (type) {
-    case "new_follow":
-      message = "started follow you";
-      break;
-    case "new_comment":
-      message = "write comment on your post";
-      break;
-    case "post_like":
-      message = "liked your post";
-      break;
-    case "comment_mention":
-      message = "You were mentioned in a comment";
-      break;
-    case "comment_like":
-      message = "was liked your comment";
-      break;
-    case "comment_reply":
-      message = `was replied to your comment`;
-      break;
-    default:
-      message = "new notification";
-      break;
-  }
+  const message = notificationMessages[type] || "new notification";
 
   const newNotification = await Notification.create({
     user,
