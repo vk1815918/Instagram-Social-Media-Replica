@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
-const Popover = ({
+const CustomPopover = ({
   triggerContent,
   triggerClassName,
   popoverClassName,
@@ -9,74 +9,60 @@ const Popover = ({
   children,
   triggerIsOpen,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const popoverRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const containerRef = useRef(null);
 
-  const togglePopover = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleVisibility = () => setVisible((prev) => !prev);
 
   useEffect(() => {
-    //none / close
-    if (triggerIsOpen) {
-      setIsOpen(true);
-      return;
-    }
-    setIsOpen(false);
+    setVisible(!!triggerIsOpen);
   }, [triggerIsOpen]);
 
-  const handleClickOutside = (event) => {
-    if (popoverRef.current && !popoverRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+    const handleClickAway = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setVisible(false);
+      }
     };
+
+    document.addEventListener("mousedown", handleClickAway);
+    return () => document.removeEventListener("mousedown", handleClickAway);
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
+    document.body.classList.toggle("overflow-hidden", visible);
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [visible]);
 
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, [isOpen]);
-
-  const positionClasses = {
+  const positionStyles = {
     "top-left": "bottom-full mb-2 left-0",
-    "top-center": "bottom-full mb-2 left-1/2 transform -translate-x-1/2",
+    "top-center": "bottom-full mb-2 left-1/2 -translate-x-1/2",
     "top-right": "bottom-full mb-2 right-0",
     "right-top": "left-full ml-2 top-0",
-    "right-center": "left-full ml-2 top-1/2 transform -translate-y-1/2",
+    "right-center": "left-full ml-2 top-1/2 -translate-y-1/2",
     "right-bottom": "left-full ml-2 bottom-0",
     "bottom-left": "top-full mt-2 left-0",
-    "bottom-center": "top-full mt-2 left-1/2 transform -translate-x-1/2",
+    "bottom-center": "top-full mt-2 left-1/2 -translate-x-1/2",
     "bottom-right": "top-full mt-2 right-0",
     "left-top": "right-full mr-2 top-0",
-    "left-center": "right-full mr-2 top-1/2 transform -translate-y-1/2",
+    "left-center": "right-full mr-2 top-1/2 -translate-y-1/2",
     "left-bottom": "right-full mr-2 bottom-0",
   };
 
   return (
-    <div className="relative " ref={popoverRef} style={{ zIndex: 1050 }}>
+    <div ref={containerRef} className="relative" style={{ zIndex: 1050 }}>
       <button
-        onClick={togglePopover}
-        className={twMerge(`${triggerClassName}`)}
+        type="button"
+        className={twMerge(triggerClassName)}
+        onClick={toggleVisibility}
       >
-        {triggerContent || ""}
+        {triggerContent ?? ""}
       </button>
-      {isOpen && (
+
+      {visible && (
         <div
           className={twMerge(
-            `absolute w-48 bg-black text-white rounded shadow-lg ${positionClasses[position]} ${popoverClassName}`
+            `absolute w-48 bg-black text-white rounded shadow-lg ${positionStyles[position]} ${popoverClassName}`
           )}
         >
           {children}
@@ -86,4 +72,4 @@ const Popover = ({
   );
 };
 
-export default Popover;
+export default CustomPopover;
