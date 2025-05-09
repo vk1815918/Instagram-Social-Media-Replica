@@ -30,7 +30,6 @@ const MobileBottomNav = () => {
               <GoHomeFill className="text-[26px]" />
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to="/explore/"
@@ -39,7 +38,6 @@ const MobileBottomNav = () => {
               <MdOutlineExplore className="text-[26px]" />
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to="/reels/"
@@ -49,7 +47,6 @@ const MobileBottomNav = () => {
               <MdSlowMotionVideo className="text-[26px]" />
             </NavLink>
           </li>
-
           <li>
             <button
               onClick={() => openModal("createPost")}
@@ -58,7 +55,6 @@ const MobileBottomNav = () => {
               <TbSquareRoundedPlus className="text-[26px]" />
             </button>
           </li>
-
           <li>
             {isLoading ? (
               <SkeletonLoader width="25px" height="25px" variant="circle" />
