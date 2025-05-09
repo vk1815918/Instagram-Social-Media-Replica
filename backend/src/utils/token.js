@@ -1,21 +1,20 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 
-export const generateAccessToken = (payload, expiresIn) => {
-  return jwt.sign({ userId: payload.userId }, accessTokenSecret, {
-    expiresIn: expiresIn || "15m",
-  });
+if (!ACCESS_TOKEN_SECRET || !REFRESH_TOKEN_SECRET) {
+  throw new Error("JWT secret(s) missing in environment variables.");
+}
+
+export const generateAccessToken = (payload, expiresIn = "15m") => {
+  return jwt.sign({ userId: payload.userId }, ACCESS_TOKEN_SECRET, { expiresIn });
 };
 
-export const generateRefreshToken = (userId, expiresIn) => {
-  return jwt.sign({ userId }, refreshTokenSecret, {
-    expiresIn: expiresIn || "30d",
-  });
+export const generateRefreshToken = (userId, expiresIn = "30d") => {
+  return jwt.sign({ userId }, REFRESH_TOKEN_SECRET, { expiresIn });
 };
 
-export const generateToken = (round) => {
-  return crypto.randomBytes(round || 20).toString("hex");
+export const generateToken = (round = 20) => {
+  return crypto.randomBytes(round).toString("hex");
 };
