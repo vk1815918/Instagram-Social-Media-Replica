@@ -39,27 +39,6 @@
 
 ## 🚀 Run It Locally
 
-### 1. Clone the Repo
-
-```bash
-git clone https://github.com/solomongetnet/instagram-clone.git
-cd instagram-clone
-```
-
-### 2. Install Dependencies
-
-```bash
-# Backend
-cd backend
-npm install
-
-# Frontend
-cd ../client
-npm install
-```
-
-### 3. Setup Environment Variables
-
 #### Backend `.env`
 
 ```env
