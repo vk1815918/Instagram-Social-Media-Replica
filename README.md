@@ -116,7 +116,3 @@ Fork → Branch → Commit → PR 🛠️
 
 > 💡 This project is a clone built for **educational purposes**.
 > Not affiliated with or endorsed by Instagram™.
-
----
-
-Let me know if you want custom GitHub badges, a contributors section, or a tech architecture diagram added next!
